@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="../game/lib/jquery.min.js"></script>
+        <script src="./js/index.js"></script>
+        <title>地球公转运动</title>
+        <style>
+            .universe-div {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .car-div {
+                float: right;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="universe-div">
+            <canvas id="universe" width="350" height="350">您当前设备不支持canvas，请换设备访问</canvas>
+        </div>
+        <div class="car-div">
+            <canvas id="car" width="350" height="300"></canvas>
+        </div>
+    </body>
+
+</html>
