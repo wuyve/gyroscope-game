@@ -4,7 +4,7 @@
 
 简介: 转动手机，小猫的眼睛会跟随手机陀螺仪方向转动。
 
-2. [别碰边儿](https://wuyve.github.io/gyroscope-game/game.html)
+2. [别碰边儿](https://wuyve.github.io/gyroscope-game/game/index.html?t=256562)
 
 简介：转动手机，让游戏中的方块不要触碰到边上，否则游戏结束。
 
