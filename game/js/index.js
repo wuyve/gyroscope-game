@@ -27,6 +27,8 @@ $(document).ready(function () {
     $('#device').html('当前设备为' + result);
     // 隐藏游戏
     $('#game-div').hide();
+    // 隐藏游戏结束页
+    $('#game-over').hide();
     // 显示home
     $('#home-div').show();
     $('#device').show();
@@ -36,7 +38,7 @@ $(document).ready(function () {
     let ctx1 = canvas1.getContext('2d');
     let canvas2 = document.getElementById('game');
     let ctx2 = canvas2.getContext('2d');
-    let ref1, alpha, beta;
+    let ref1, ref2, alpha, beta, beginTime, endTime;
 
     // 首页上的运动方块
     let moveRect = {
@@ -78,14 +80,18 @@ $(document).ready(function () {
         $('#home-div').hide();
         // 显示游戏页面
         $('#game-div').show();
+
+        // 显示动画
+        window.requestAnimationFrame(beginGame);
+        beginTime = (new Date()).valueOf();
     });
 
     // 游戏运动方块
     let gameRect = {
         x: randomXY(15, 310 - 15),
         y: randomXY(15, 310 - 15),
-        vx: 5,
-        vy: 5,
+        vx: -5,
+        vy: -5,
         width: 20,
         height: 20,
         draw: function () {
@@ -95,12 +101,61 @@ $(document).ready(function () {
             ctx2.strokeRect(this.x, this.y, this.width, this.height);
         }
     }
-    // gameRect.draw();
 
     // 游戏开始
 
     function beginGame() {
+        // 清除上一帧动画
+        ctx2.clearRect(0, 0, 310, 310);
+        gameRect.draw();
 
+        gameRect.x += gameRect.vx;
+        gameRect.y += gameRect.vy;
+
+        if (gameRect.x > 291 || gameRect.x < -1) {
+            endTime = (new Date()).valueOf();
+            console.log(endTime);
+            gameRect.vx = 0;
+            console.log('碰到左右两边了，游戏结束');
+            gameOver();
+            return;
+        }
+        if (gameRect.y > 291 || gameRect.y < -1) {
+            endTime = (new Date()).valueOf();
+            console.log(endTime);
+            gameRect.vy = 0;
+            console.log('碰到上下两边了，游戏结束');
+            gameOver();
+            return;
+        }
+        ref2 = window.requestAnimationFrame(beginGame);
     }
+    // 游戏结束
+    function gameOver() {
+        $('#game-div').hide();
+        $('#game-over').show();
+        let time = (endTime - beginTime) / 1000;
+        $('.time').text(time);
+    }
+
+    $('.cancel').on('click', function () {
+        // 去休息休息
+        window.location.href = 'https://www.bookstack.cn/'
+    });
+
+    $('.restart').on('click', function () {
+        // 隐藏结束页
+        $('#game-over').hide();
+        $('#game-div').show();
+
+        // 显示动画
+        // 重定义游戏坐标
+        gameRect.x = randomXY(15, 310 - 15);
+        gameRect.y = randomXY(15, 310 - 15);
+        gameRect.vx = -1;
+        gameRect.vy = -1;
+        window.requestAnimationFrame(beginGame);
+        beginTime = (new Date()).valueOf();
+    });
 
 });

@@ -63,6 +63,58 @@
                 height: 310px;
                 background-color: #CDAF95;
             }
+
+            #game-over {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin-top: 40%;
+            }
+
+            .over-title {
+                margin: 20px;
+                font-size: 20px;
+                letter-spacing: 2px;
+                font-weight: bold;
+            }
+
+            .time {
+                color: red;
+                font-size: 17px;
+            }
+
+            .btn-group {
+                display: flex;
+                width: 80%;
+                justify-content: space-around;
+                align-items: center;
+                margin-top: 20%;
+            }
+
+            .restart {
+                display: flex;
+                width: 80px;
+                height: 40px;
+                background-color: #4395FF;
+                color: #FFF;
+                justify-content: center;
+                align-items: center;
+                border-radius: 20px;
+                font-size: 14px;
+            }
+
+            .cancel {
+                display: flex;
+                width: 80px;
+                height: 40px;
+                background-color: #DE6110;
+                color: #FFF;
+                justify-content: center;
+                align-items: center;
+                border-radius: 20px;
+                font-size: 14px;
+            }
         </style>
     </head>
 
@@ -79,133 +131,20 @@
             <div id="game-div" class="hide">
                 <canvas id="game" width="310" height="310">当前设备不支持canvas，请换设备登录</canvas>
             </div>
+            <div id="game-over">
+                <div class="over-title">游戏结束</div>
+                <div style="margin-top: 10%;">
+                    <span>您坚持了</span>
+                    <span class="time"></span>
+                    <span>秒</span>
+                </div>
+                <div style="margin-top: 10%;">再接再厉哦！！</div>
+                <div class="btn-group">
+                    <div class="cancel">休息一下</div>
+                    <div class="restart">重新开始</div>
+                </div>
+            </div>
         </div>
-        <script>
-            // 检测是否为打开网页的设备
-            // function IsPC() {
-            //     let userAgentInfo = navigator.userAgent;
-            //     console.log(typeof userAgentInfo);
-            //     console.log(userAgentInfo);
-            //     let Agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod", "Windows"];
-            //     let result = '';
-            //     for (var v = 0; v < Agents.length; v++) {
-            //         if (userAgentInfo.indexOf(Agents[v]) > 0) {
-            //           result = Agents[v];
-            //           break;
-            //         }
-            //     }
-            //     return result;
-            // }
-            // let device = IsPC();
-            // document.getElementById('device').innerHTML = '当前设备为：' + device;
-            // console.log('当前设备为：', device)
-
-            // let moveRect = {
-            //     x: 45,
-            //     y: 45,
-            //     vx: 1,
-            //     vy: 2,
-            //     draw: function (ctx) {
-            //         drawRect(ctx, this.x, this.y, 10, 10, '#AA2A00', '#FF5500');
-            //     }
-            // }
-
-
-            // 开始页面画图
-            // let canvas1 = document.getElementById('canvas');
-            // let ctx1 = canvas1.getContext('2d');
-            // let raf;
-            // // 初始化游戏
-            // let canvas2 = document.getElementById('game');
-            // let ctx2 = canvas2.getContext('2d');
-
-            // 显示&隐藏
-
-            // 画矩形
-            // function drawRect(ctx, x, y, width, height, strokeStyle = '#000', fillStyle = '#000') {
-            //     ctx.fillStyle = fillStyle;
-            //     ctx.strokeStyle = strokeStyle;
-            //     ctx.fillRect(x, y, width, height);
-            //     ctx.strokeRect(x, y, width, height);
-            // }
-            // 动画
-            // function animation() {
-            //     // 清除上一帧动画: 重新绘制背景
-            //     ctx1.clearRect(0, 0, 100, 100);
-            //     moveRect.draw(ctx1);
-            //     moveRect.x += moveRect.vx;
-            //     moveRect.y += moveRect.vy;
-            //     if (moveRect.x > 85 || moveRect.x < 5) {
-            //         moveRect.vx = -moveRect.vx;
-            //     }
-            //     if (moveRect.y > 85 || moveRect.y < 5) {
-            //         moveRect.vy = -moveRect.vy;
-            //     }
-            //     window.requestAnimationFrame(animation);
-            // }
-
-            // window.onload = function () {
-            //     window.requestAnimationFrame(animation);
-            // };
-
-            // // 点击开始游戏
-            // let beginGame = document.getElementsByClassName('home-button')[0];
-            // beginGame.addEventListener('click', function () {
-            //     window.cancelAnimationFrame(animation);
-            //     document.getElementById('home-div').className = 'hide';
-            //     document.getElementById('game-div').className = 'show-game';
-            //     // 隐藏设备信息
-            //     document.getElementById('device').className = 'hide';
-            //     // 结束动画
-
-            //     // 开始游戏
-            //     // window.requestAnimationFrame(initGame);
-            //     // initGame()
-            // });
-
-
-            // // 生成随机坐标
-            // function randomXY(min, max) {
-            //     return parseInt(Math.random() * (max - min + 1) + min, 10);
-            // }
-
-            // let gameRect = {
-            //     x: randomXY(15, 310 - 35),
-            //     y: randomXY(15, 310 - 35),
-            //     // x: 271,
-            //     // y: 57,
-            //     vh: 3,
-            //     vy: 3,
-            //     width: 20,
-            //     height: 10,
-            //     draw: function () {
-            //         console.log(this.x, this.y)
-            //         ctx2.fillStyle = '#F00';
-            //         ctx2.fillRect(this.x, this.y, this.width, this.height);
-            //     }
-            // }
-            // gameRect.draw();
-
-            // // 游戏开始
-            // function initGame() {
-            //     // 清除上一帧动画: 重新绘制背景
-            //     ctx2.clearRect(1, 1, 310 - 2, 500 - 2);
-            //     gameRect.draw();
-            //     moveRect.x += moveRect.vx;
-            //     moveRect.y += moveRect.vy;
-            //     ref = window.requestAnimationFrame(initGame);
-            // }
-
-            // // 获取陀螺仪参数
-            // let alpha, beta;
-            // if (window.DeviceOrientationEvent) {
-            //     window.addEventListener('deviceorientation', function (event) {
-            //         alpha = Math.round(event.alpha);
-            //         beta = Math.round(event.beta);
-            //     });
-            // }
-
-        </script>
     </body>
 
 </html>
