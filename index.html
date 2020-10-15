@@ -1,239 +1,271 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-		<title>陀螺仪</title>
-		<style>
-			.mycanvas {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-			}
-			#cat {
-				border: 1px solid #CCC;
-			}
-		</style>
-</head>
-<body>
-alpha:<span id="alpha"></span><br/>
-beta:<span id="beta"></span><br/>
-gamma:<span id="gamma"></span><br/>
-<div class="mycanvas">
-	<canvas id="cat" width="300" height="300">您的设备不支持canvas</canvas>
-</div>
 
-</body>
-<script>
-		// canvas绘画
-		let canvas = document.getElementById('cat');
-		let ctx = canvas.getContext('2d');
-		let raf;
-		
-		// 画两个三角形: 猫耳朵
-		ctx.beginPath();
-		ctx.moveTo(66, 170);
-		ctx.lineTo(66, 100);
-		ctx.lineTo(150, 170);
-		ctx.closePath();
-		ctx.fillStyle = "#FF9812";
- 		ctx.strokeStyle = "#B59001";
-		ctx.fill();
-		ctx.stroke();
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>陀螺仪</title>
+        <style>
+            .mycanvas {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
 
-		ctx.beginPath();
-		ctx.moveTo(150, 170);
-		ctx.lineTo(234, 100);
-		ctx.lineTo(234, 170);
-		ctx.closePath();
-		ctx.fillStyle = "#FF9812";
- 		ctx.strokeStyle = "#B59001";
-		ctx.fill();
-		ctx.stroke();
+            #cat {
+                border: 1px solid #CCC;
+            }
 
-		// 画椭圆: 猫脸
-		ctx.beginPath();
-		ctx.ellipse(150, 200, 100, 70, 0 ,0, Math.PI * 2);
-		ctx.fillStyle = "#FF9812";
-		ctx.strokeStyle = "#B59001";
- 		ctx.fill();
-		ctx.stroke();
-		
-		// 画圆: 猫鼻子
-		ctx.beginPath();
-		ctx.arc(149, 210, 7, 0, Math.PI * 2);
-		ctx.fillStyle = '#000';
-		ctx.fill();
+            #device {
+                color: red;
+                font-size: 18px;
+                font-weight: bold;
+                display: flex;
+                justify-content: center;
+            }
+        </style>
+    </head>
 
-		// 画圆: 猫舌头
-		ctx.beginPath();
-		ctx.arc(150, 227, 10, 0, Math.PI * 2);
-		ctx.fillStyle = '#A60112';
-		ctx.fill();
+    <body>
+        alpha:<span id="alpha"></span><br />
+        beta:<span id="beta"></span><br />
+        gamma:<span id="gamma"></span><br />
+        <div id="device"></div>
+        <div class="mycanvas">
+            <canvas id="cat" width="300" height="300">您的设备不支持canvas</canvas>
+        </div>
 
-		// 画圆弧: 猫嘴巴
-		ctx.beginPath();
-		ctx.arc(131, 215, 15, 0, Math.PI - 50);
-		ctx.fillStyle = "#FF9812";
-		ctx.strokeStyle = "#B39800";
-		ctx.fill();
-		ctx.stroke();
+    </body>
+    <script>
+        // canvas绘画
+        let canvas = document.getElementById('cat');
+        let ctx = canvas.getContext('2d');
+        let raf;
 
-		ctx.beginPath();
-		ctx.arc(170, 215, 15, 0, Math.PI - 50);
-		ctx.fillStyle = "#FF9812";
-		ctx.strokeStyle = "#B39800";
-		ctx.fill();
-		ctx.stroke();
+        // 画两个三角形: 猫耳朵
+        ctx.beginPath();
+        ctx.moveTo(66, 170);
+        ctx.lineTo(66, 100);
+        ctx.lineTo(150, 170);
+        ctx.closePath();
+        ctx.fillStyle = "#FF9812";
+        ctx.strokeStyle = "#B59001";
+        ctx.fill();
+        ctx.stroke();
 
-		// 画圆: 猫眼睛
-		let outerEyes1 = {
-			fillStyle: 'rgba(28, 153, 199)',
-			draw: function () {
-				ctx.beginPath();
-				ctx.arc(110, 175, 15, 0, Math.PI * 2);
-				// ctx.fillStyle = "#1C99C7";
-				ctx.fillStyle = this.fillStyle;
-				ctx.strokeStyle = "#B59001";
-				ctx.fill();
-				ctx.stroke();
-			}
-		};
-		outerEyes1.draw()
-		
-		let outerEyes2 = {
-			fillStyle: 'rgba(28, 153, 199)',
-			draw: function () {
-				ctx.beginPath();
-				ctx.arc(190, 175, 15, 0, Math.PI * 2);
-				// ctx.fillStyle = "#1C99C7";
-				ctx.fillStyle = this.fillStyle;
-				ctx.strokeStyle = "#B59001";
-				ctx.fill();
-				ctx.stroke();
-			}
-		};
-		outerEyes2.draw()
-		
-		// 画线: 胡子
-		ctx.beginPath();
-		ctx.moveTo(100, 205);
-		ctx.lineTo(25, 175);
+        ctx.beginPath();
+        ctx.moveTo(150, 170);
+        ctx.lineTo(234, 100);
+        ctx.lineTo(234, 170);
+        ctx.closePath();
+        ctx.fillStyle = "#FF9812";
+        ctx.strokeStyle = "#B59001";
+        ctx.fill();
+        ctx.stroke();
 
-		ctx.moveTo(100, 215);
-		ctx.lineTo(25, 215);
+        // 画椭圆: 猫脸
+        ctx.beginPath();
+        ctx.ellipse(150, 200, 100, 70, 0, 0, Math.PI * 2);
+        ctx.fillStyle = "#FF9812";
+        ctx.strokeStyle = "#B59001";
+        ctx.fill();
+        ctx.stroke();
 
-		ctx.moveTo(100, 225);
-		ctx.lineTo(25, 255);
+        // 画圆: 猫鼻子
+        ctx.beginPath();
+        ctx.arc(149, 210, 7, 0, Math.PI * 2);
+        ctx.fillStyle = '#000';
+        ctx.fill();
 
-		ctx.moveTo(200, 205);
-		ctx.lineTo(275, 175);
+        // 画圆: 猫舌头
+        ctx.beginPath();
+        ctx.arc(150, 227, 10, 0, Math.PI * 2);
+        ctx.fillStyle = '#A60112';
+        ctx.fill();
 
-		ctx.moveTo(200, 215);
-		ctx.lineTo(275, 215);
+        // 画圆弧: 猫嘴巴
+        ctx.beginPath();
+        ctx.arc(131, 215, 15, 0, Math.PI - 50);
+        ctx.fillStyle = "#FF9812";
+        ctx.strokeStyle = "#B39800";
+        ctx.fill();
+        ctx.stroke();
 
-		ctx.moveTo(200, 225);
-		ctx.lineTo(275, 255);
+        ctx.beginPath();
+        ctx.arc(170, 215, 15, 0, Math.PI - 50);
+        ctx.fillStyle = "#FF9812";
+        ctx.strokeStyle = "#B39800";
+        ctx.fill();
+        ctx.stroke();
 
-		ctx.strokeStyle = "#B39800";
-		ctx.stroke();
+        // 画圆: 猫眼睛
+        let outerEyes1 = {
+            fillStyle: 'rgba(28, 153, 199)',
+            draw: function () {
+                ctx.beginPath();
+                ctx.arc(110, 175, 15, 0, Math.PI * 2);
+                // ctx.fillStyle = "#1C99C7";
+                ctx.fillStyle = this.fillStyle;
+                ctx.strokeStyle = "#B59001";
+                ctx.fill();
+                ctx.stroke();
+            }
+        };
+        outerEyes1.draw()
 
-		let eyes1 = {
-			x: 110,
-			y: 175,
-			vx: 1,
-			vy: 1,
-			draw: function () {
-				ctx.beginPath();
-				ctx.ellipse(this.x, this.y, 3, 5, 0 ,0, Math.PI * 2);
-				ctx.fillStyle = "#020003";
-				ctx.fill();
-			}
-		};
+        let outerEyes2 = {
+            fillStyle: 'rgba(28, 153, 199)',
+            draw: function () {
+                ctx.beginPath();
+                ctx.arc(190, 175, 15, 0, Math.PI * 2);
+                // ctx.fillStyle = "#1C99C7";
+                ctx.fillStyle = this.fillStyle;
+                ctx.strokeStyle = "#B59001";
+                ctx.fill();
+                ctx.stroke();
+            }
+        };
+        outerEyes2.draw()
 
-		eyes1.draw();
+        // 画线: 胡子
+        ctx.beginPath();
+        ctx.moveTo(100, 205);
+        ctx.lineTo(25, 175);
 
-		let eyes2 = {
-			x: 190,
-			y: 175,
-			vx: 1,
-			vy: 1,
-			draw: function () {
-				ctx.beginPath();
-				ctx.ellipse(this.x, this.y, 3, 5, 0 ,0, Math.PI * 2);
-				ctx.fillStyle = "#020003";
-				ctx.fill();
-			}
-		};
-		eyes2.draw();
+        ctx.moveTo(100, 215);
+        ctx.lineTo(25, 215);
 
-		// 动画
-		function draw () {
-			// 清除眼核
-			outerEyes1.draw();
-			outerEyes2.draw();
-			eyes1.draw();
-			eyes2.draw();
-			// 检测方向
-			if (gamma < 0) {
-				eyes1.vx = -1;
-				eyes2.vx = -1;
-			} else {
-				eyes1.vx = 1;
-				eyes2.vx = 1;
-			}
-			if (beta < 0) {
-				eyes1.vy = -1;
-				eyes2.vy = -1;
-			} else {
-				eyes1.vy = 1;
-				eyes2.vy = 1;
-			}
+        ctx.moveTo(100, 225);
+        ctx.lineTo(25, 255);
 
-			// 划定区域
-			if (eyes1.y + eyes1.vy > 182 || eyes1.y + eyes1.vy < 168) {
-				eyes1.vy = 0;
-			}
-			if (eyes1.x + eyes1.vx > 118 || eyes1.x + eyes1.vx < 101) {
-				eyes1.vx = 0;
+        ctx.moveTo(200, 205);
+        ctx.lineTo(275, 175);
 
-			}
+        ctx.moveTo(200, 215);
+        ctx.lineTo(275, 215);
 
-			if (eyes2.y + eyes2.vy > 182 || eyes2.y + eyes2.vy < 168) {
-				eyes2.vy = 0;
-			}
-			if (eyes2.x + eyes2.vx > 199 || eyes2.x + eyes2.vx < 182) {
-				eyes2.vx = 0;
-			}
+        ctx.moveTo(200, 225);
+        ctx.lineTo(275, 255);
 
-			eyes1.x += eyes1.vx;
-			eyes2.x += eyes2.vx;
-			eyes1.y += eyes1.vy;
-			eyes2.y += eyes2.vy;
-		}
+        ctx.strokeStyle = "#B39800";
+        ctx.stroke();
+
+        let eyes1 = {
+            x: 110,
+            y: 175,
+            vx: 1,
+            vy: 1,
+            draw: function () {
+                ctx.beginPath();
+                ctx.ellipse(this.x, this.y, 3, 5, 0, 0, Math.PI * 2);
+                ctx.fillStyle = "#020003";
+                ctx.fill();
+            }
+        };
+
+        eyes1.draw();
+
+        let eyes2 = {
+            x: 190,
+            y: 175,
+            vx: 1,
+            vy: 1,
+            draw: function () {
+                ctx.beginPath();
+                ctx.ellipse(this.x, this.y, 3, 5, 0, 0, Math.PI * 2);
+                ctx.fillStyle = "#020003";
+                ctx.fill();
+            }
+        };
+        eyes2.draw();
+
+        // 动画
+        function draw() {
+            // 清除眼核
+            outerEyes1.draw();
+            outerEyes2.draw();
+            eyes1.draw();
+            eyes2.draw();
+            // 检测方向
+            if (gamma < 0) {
+                eyes1.vx = -1;
+                eyes2.vx = -1;
+            } else {
+                eyes1.vx = 1;
+                eyes2.vx = 1;
+            }
+            if (beta < 0) {
+                eyes1.vy = -1;
+                eyes2.vy = -1;
+            } else {
+                eyes1.vy = 1;
+                eyes2.vy = 1;
+            }
+
+            // 划定区域
+            if (eyes1.y + eyes1.vy > 182 || eyes1.y + eyes1.vy < 168) {
+                eyes1.vy = 0;
+            }
+            if (eyes1.x + eyes1.vx > 118 || eyes1.x + eyes1.vx < 101) {
+                eyes1.vx = 0;
+
+            }
+
+            if (eyes2.y + eyes2.vy > 182 || eyes2.y + eyes2.vy < 168) {
+                eyes2.vy = 0;
+            }
+            if (eyes2.x + eyes2.vx > 199 || eyes2.x + eyes2.vx < 182) {
+                eyes2.vx = 0;
+            }
+
+            eyes1.x += eyes1.vx;
+            eyes2.x += eyes2.vx;
+            eyes1.y += eyes1.vy;
+            eyes2.y += eyes2.vy;
+        }
 
 
-	eyes1.draw();
-	eyes2.draw();
+        eyes1.draw();
+        eyes2.draw();
 
-	let alpha, beta, gamma;
+        let alpha, beta, gamma;
 
-    if (window.DeviceOrientationEvent) {
-        window.addEventListener('deviceorientation', function (event) {
+        if (window.DeviceOrientationEvent) {
+            window.addEventListener('deviceorientation', function (event) {
                 alpha = Math.round(event.alpha),
-                beta = Math.round(event.beta),
-								gamma = Math.round(event.gamma);
-								window.requestAnimationFrame(draw);
+                    beta = Math.round(event.beta),
+                    gamma = Math.round(event.gamma);
+                window.requestAnimationFrame(draw);
 
-								document.getElementById('alpha').innerHTML = alpha;
-								document.getElementById('beta').innerHTML = beta;
-								document.getElementById('gamma').innerHTML = gamma;
-        }, false);
-    } else {
-        document.querySelector('body').innerHTML = '你的浏览器不支持陀螺仪';
-    }
+                document.getElementById('alpha').innerHTML = alpha;
+                document.getElementById('beta').innerHTML = beta;
+                document.getElementById('gamma').innerHTML = gamma;
+            }, false);
+        } else {
+            document.querySelector('body').innerHTML = '你的浏览器不支持陀螺仪';
+        }
 
-</script>
+        function IsPC() {
+            let userAgentInfo = navigator.userAgent;
+            console.log(typeof userAgentInfo);
+            console.log(userAgentInfo);
+            let Agents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod", "Windows"];
+            let result = '';
+            for (var v = 0; v < Agents.length; v++) {
+                if (userAgentInfo.indexOf(Agents[v]) > 0) {
+                    result = Agents[v];
+                    break;
+                }
+            }
+            return result;
+        }
+
+        let device = IsPC();
+        if (device == 'Windows') {
+            document.getElementById('device').innerHTML = '当前设备为：' + device + ', 暂不支持眼部动画，请用手机打开！！';
+        }
+    </script>
+
 </html>
