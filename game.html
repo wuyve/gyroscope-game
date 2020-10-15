@@ -5,8 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>别碰边儿</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
     #canvas, #game {
-      border: 1px solid #ccc;
+      border: 1px solid #8B0000;
       background-color: #F6F6F6;
     }
     .hide {
@@ -14,6 +18,7 @@
     }
     .show-home {
       margin-top: 35%;
+      display: block;
     }
     .home-title {
       width: 100%;
@@ -38,6 +43,17 @@
       background-color: #CCCCCC;
       font-size: 15px;
       font-weight: bold;
+    }
+    .show-game {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10%;
+    }
+    #game {
+      width: 310px;
+      height: 500px;
+      background-color: #CDAF95;
     }
   </style>
 </head>
@@ -90,6 +106,10 @@
     let canvas1 = document.getElementById('canvas');
     let ctx1 = canvas1.getContext('2d');
     let raf;
+    // 初始化游戏
+    let canvas2 = document.getElementById('game');
+    let ctx2 = canvas2.getContext('2d');
+
     // 显示&隐藏
     let show = 1;  // 1: 显示游戏开始; 2: 显示游戏, 3: 显示游戏结束
 
@@ -121,13 +141,60 @@
     };
 
     // 点击开始游戏
-    document.getElementsByClassName('home-button').addEventListener('click', function () {
+    let beginGame = document.getElementsByClassName('home-button')[0];
+    beginGame.addEventListener('click', function () {
       document.getElementById('home-div').className = 'hide';
-      document.getElementById('game-div').className = ''
+      document.getElementById('game-div').className = 'show-game';
+      // 隐藏设备信息
+      document.getElementById('device').className = 'hide';
+      // 结束动画
+      window.cancelAnimationFrame(animation);
 
+      // 开始游戏
+      window.requestAnimationFrame(initGame);
+      // initGame()
     });
+    
 
+    // 生成随机坐标
+    function randomXY(min, max) {
+      return parseInt(Math.random()  *(max - min + 1) + min, 10);
+    }
 
+    let gameRect = {
+      // x: randomXY(15, 310 - 35),
+      // y: randomXY(15, 500 - 35),
+      x: 271,
+      y: 57,
+      vh: 3,
+      vy: 3,
+      width: 10,
+      height: 10,
+      draw: function (ctx) {
+        drawRect(ctx, this.x, this.y, 10, 10, '#FF0000', '#FF0000');
+      }
+    }
+    gameRect.draw(ctx2);
+
+    // 游戏开始
+    function initGame() {
+      // 清除上一帧动画: 重新绘制背景
+      ctx2.clearRect(1, 1, 310 - 2, 500 - 2);
+      gameRect.draw(ctx2);
+      moveRect.x += moveRect.vx;
+      moveRect.y += moveRect.vy;
+      window.requestAnimationFrame(initGame);
+    }
+
+    // 获取陀螺仪参数
+    let alpha, beta;
+    if (window.DeviceOrientationEvent) {
+      window.addEventListener('deviceorientation', function (event) {
+        alpha = Math.round(event.alpha);
+        beta = Math.round(event.beta);
+      });
+    }
+    
   </script>
 </body>
 </html>
