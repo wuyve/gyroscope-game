@@ -153,9 +153,8 @@ $(document).ready(function () {
         // 重定义游戏坐标
         gameRect.x = randomXY(15, 310 - 15);
         gameRect.y = randomXY(15, 310 - 15);
-        gameRect.vx = -1;
-        gameRect.vy = -1;
         window.requestAnimationFrame(beginGame);
+        gyroscope();
         beginTime = (new Date()).valueOf();
     });
 
@@ -168,6 +167,18 @@ $(document).ready(function () {
             $('.alpha').text('alpha: ' + alpha);
             $('.gamma').text('gamma: ' + gamma);
             $('.beta').text('beta: ' + beta);
+
+            if (gamma < 0) {
+                gameRect.vx = -5;
+            } else {
+                gameRect.vx = 5;
+            }
+
+            if (beta < 0) {
+                gameRect.vy = -5;
+            } else {
+                gameRect.vy = 5
+            }
         })
     }
 });
