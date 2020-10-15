@@ -38,7 +38,7 @@ $(document).ready(function () {
     let ctx1 = canvas1.getContext('2d');
     let canvas2 = document.getElementById('game');
     let ctx2 = canvas2.getContext('2d');
-    let ref1, ref2, alpha, beta, beginTime, endTime;
+    let ref1, ref2, alpha, beta, gamma, beginTime, endTime;
 
     // 首页上的运动方块
     let moveRect = {
@@ -84,6 +84,7 @@ $(document).ready(function () {
         // 显示动画
         window.requestAnimationFrame(beginGame);
         beginTime = (new Date()).valueOf();
+        gyroscope();
     });
 
     // 游戏运动方块
@@ -158,4 +159,15 @@ $(document).ready(function () {
         beginTime = (new Date()).valueOf();
     });
 
+    // 监听陀螺仪数据
+    function gyroscope() {
+        window.addEventListener('deviceorientation', function (e) {
+            alpha = Math.round(e.alpha);
+            gamma = Math.round(e.gamma);
+            beta = Math.round(e.beta);
+            $('.alpha').text('alpha: ' + alpha);
+            $('.gamma').text('gamma: ' + gamma);
+            $('.beta').text('beta: ' + beta);
+        })
+    }
 });
