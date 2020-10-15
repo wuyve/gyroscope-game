@@ -264,6 +264,7 @@
 
         let device = IsPC();
         document.getElementById('device').innerHTML = '当前设备为：' + device;
+        console.log(device);
         if (device == 'Windows') {
             document.getElementById('device').innerHTML = '当前设备为：' + device + ', 暂不支持眼部动画，请用手机打开！！';
         }
