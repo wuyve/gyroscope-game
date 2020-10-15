@@ -91,8 +91,8 @@ $(document).ready(function () {
     let gameRect = {
         x: randomXY(15, 310 - 15),
         y: randomXY(15, 310 - 15),
-        vx: -5,
-        vy: -5,
+        vx: -4,
+        vy: -4,
         width: 20,
         height: 20,
         draw: function () {
@@ -169,15 +169,15 @@ $(document).ready(function () {
             $('.beta').text('beta: ' + beta);
 
             if (gamma < 0) {
-                gameRect.vx = -5;
+                gameRect.vx = -4;
             } else {
-                gameRect.vx = 5;
+                gameRect.vx = 4;
             }
 
             if (beta < 0) {
-                gameRect.vy = -5;
+                gameRect.vy = -4;
             } else {
-                gameRect.vy = 5
+                gameRect.vy = 4
             }
         })
     }
