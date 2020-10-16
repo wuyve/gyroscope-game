@@ -2,6 +2,11 @@ $(document).ready(function () {
     let sun = new Image();
     let earth = new Image();
     let moon = new Image();
+    let carImg = new Image();
+    let treeImg = new Image();
+
+    let car_x = 250, car_y = 150;
+    let tree_x = 0, tree_y = 30;
 
     // 初始化
     function init() {
@@ -10,7 +15,11 @@ $(document).ready(function () {
         sun.height = 50;
         earth.src = './img/earth.png';
         moon.src = './img/moon.png';
+        carImg.src = './img/car.png';
+        treeImg.src = './img/tree.png';
         window.requestAnimationFrame(draw);
+        balanceCar();
+        drawTree();
     }
     let sunWidth = 150, sunHeight = 150;
     let vx = 0.5, vy = 0.5;
@@ -57,15 +66,45 @@ $(document).ready(function () {
     }
     init();
 
+    // 运动的平衡车
     function balanceCar() {
         let car = document.getElementById('car');
         let ctx_car = car.getContext('2d');
+        ctx_car.clearRect(0, 150, 300, 300);
 
-        let carImg = new Image();
-        carImg.src = './img/car.png';
-        ctx_car.globalCompositeOperation = 'destination-over';
-        ctx_car.drawImage(carImg, 50, 50, 50, 100);
+        // 画路径
+        ctx_car.strokeStyle = "#CCC";
+        ctx_car.beginPath();
+        ctx_car.moveTo(300, 250);
+        ctx_car.lineTo(70, 310)
+        ctx_car.stroke();
+        ctx_car.save();
 
+        ctx_car.beginPath();
+        ctx_car.moveTo(300, 230);
+        ctx_car.lineTo(70, 290)
+        ctx_car.stroke();
+        ctx_car.save();
+
+        let car_vx = -2, car_vy = .5;
+        ctx_car.drawImage(carImg, car_x, car_y, 50, 100);
+        car_x += car_vx, car_y += car_vy;
+        if (car_x < 70 || car_y > 280) {
+            car_x = 250, car_y = 150;
+        }
+        window.requestAnimationFrame(balanceCar);
     }
-    balanceCar();
+
+    // 画树
+    function drawTree() {
+        let tree_canvas = document.getElementById('car');
+        let ctx_tree = tree_canvas.getContext('2d');
+        setTimeout(function () {
+            while (tree_x < 320) {
+                ctx_tree.drawImage(treeImg, tree_x, tree_y, 80, 80);
+                tree_x += 80;
+                tree_y -= 5;
+            }
+        }, 200);
+    }
 });
